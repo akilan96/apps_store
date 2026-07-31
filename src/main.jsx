@@ -273,21 +273,40 @@ function App() {
     setTimeout(() => setNotice(''), 3000)
   }
 
-  // DOWNLOAD SOFTWARE - DIRECT STATIC LINK FOR installation_setup.zip
+  // DOWNLOAD SOFTWARE - FETCHES installation_setup.zip WITH VERCEL COMPATIBILITY
   const downloadSoftware = (title) => {
     setInstalled(x => [...x, title])
     const zipFileName = `${title}_setup.zip`
     setNotice(`Downloading ${zipFileName}...`)
 
-    const a = document.createElement('a')
-    a.style.display = 'none'
-    a.href = '/assets/installation_setup.zip'
-    a.download = zipFileName
-    document.body.appendChild(a)
-    a.click()
-    document.body.removeChild(a)
+    fetch('/assets/installation_setup.zip')
+      .then(res => {
+        if (!res.ok) throw new Error('File fetch failed')
+        return res.blob()
+      })
+      .then(blob => {
+        const url = window.URL.createObjectURL(blob)
+        const a = document.createElement('a')
+        a.style.display = 'none'
+        a.href = url
+        a.download = zipFileName
+        document.body.appendChild(a)
+        a.click()
+        window.URL.revokeObjectURL(url)
+        document.body.removeChild(a)
+        setNotice(`✓ Downloaded ${zipFileName}`)
+      })
+      .catch((err) => {
+        console.error(err)
+        const a = document.createElement('a')
+        a.href = '/assets/installation_setup.zip'
+        a.download = zipFileName
+        document.body.appendChild(a)
+        a.click()
+        document.body.removeChild(a)
+      })
 
-    setTimeout(() => setNotice(''), 3000)
+    setTimeout(() => setNotice(''), 3500)
   }
 
   // Filtered list for Discover
@@ -799,7 +818,7 @@ function App() {
                         key={preset.name}
                         className={`quick-chip ${editIconUrl === preset.url ? 'active' : ''}`}
                         style={{padding: '4px 10px', fontSize: 11}}
-                        onClick={() => setEditIconUrl(preset.url)}
+                        onClick={() => setNewIconUrl(preset.url)}
                       >
                         {preset.name}
                       </button>
