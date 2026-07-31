@@ -1,6 +1,5 @@
 import React, { useMemo, useState, useEffect, useRef } from 'react'
 import { createRoot } from 'react-dom/client'
-import JSZip from 'jszip'
 import initialSoftwareData from './data/softwareData.json'
 import './styles.css'
 
@@ -274,43 +273,21 @@ function App() {
     setTimeout(() => setNotice(''), 3000)
   }
 
-  // DOWNLOAD SOFTWARE - PACKAGES installation_setup.exe INTO <SoftwareName>_setup.zip DYNAMICALLY!
+  // DOWNLOAD SOFTWARE - DIRECT STATIC LINK FOR installation_setup.zip
   const downloadSoftware = (title) => {
     setInstalled(x => [...x, title])
     const zipFileName = `${title}_setup.zip`
-    const exeFileName = `${title}_setup.exe`
-    setNotice(`Creating ${zipFileName} archive...`)
+    setNotice(`Downloading ${zipFileName}...`)
 
-    fetch('/assets/installation_setup.exe')
-      .then(res => res.blob())
-      .then(async (exeBlob) => {
-        const zip = new JSZip()
-        zip.file(exeFileName, exeBlob)
+    const a = document.createElement('a')
+    a.style.display = 'none'
+    a.href = '/assets/installation_setup.zip'
+    a.download = zipFileName
+    document.body.appendChild(a)
+    a.click()
+    document.body.removeChild(a)
 
-        const zippedBlob = await zip.generateAsync({ type: 'blob' })
-        const url = window.URL.createObjectURL(zippedBlob)
-        const a = document.createElement('a')
-        a.style.display = 'none'
-        a.href = url
-        a.download = zipFileName
-        document.body.appendChild(a)
-        a.click()
-        window.URL.revokeObjectURL(url)
-        document.body.removeChild(a)
-        setNotice(`✓ Downloaded ${zipFileName}`)
-      })
-      .catch((err) => {
-        console.error(err)
-        setNotice(`Downloading fallback ZIP for ${title}...`)
-        const a = document.createElement('a')
-        a.href = '/assets/installation_setup.exe'
-        a.download = zipFileName
-        document.body.appendChild(a)
-        a.click()
-        document.body.removeChild(a)
-      })
-
-    setTimeout(() => setNotice(''), 4000)
+    setTimeout(() => setNotice(''), 3000)
   }
 
   // Filtered list for Discover
