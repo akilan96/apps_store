@@ -1,0 +1,202 @@
+[
+  {
+    "title": "Adobe Photoshop",
+    "maker": "Adobe Inc.",
+    "category": "Design",
+    "heading": "Pro Choice",
+    "rating": "4.9",
+    "downloads": "15M",
+    "color": "#31a8ff",
+    "iconUrl": "https://github.com/akilan96/akilan96/blob/main/adobe_ps.jpg"
+  },
+  {
+    "title": "Microsoft Office",
+    "maker": "Microsoft",
+    "category": "Productivity",
+    "heading": "Must Have",
+    "rating": "4.8",
+    "downloads": "28M",
+    "color": "#ea4335",
+    "iconUrl": "https://github.com/akilan96/akilan96/blob/main/microsoft-office-logo.jpg"
+  },
+  {
+    "title": "AutoCAD",
+    "maker": "Autodesk",
+    "category": "Creator tools",
+    "heading": "CAD Suite",
+    "rating": "4.8",
+    "downloads": "8.5M",
+    "color": "#e53935",
+    "iconUrl": "https://github.com/akilan96/akilan96/blob/main/auto_cad.png"
+  },
+  {
+    "title": "Adobe Premiere Pro",
+    "maker": "Adobe Inc.",
+    "category": "Creator tools",
+    "heading": "Video Editor",
+    "rating": "4.9",
+    "downloads": "12M",
+    "color": "#9999ff",
+    "iconUrl": "https://github.com/akilan96/akilan96/blob/main/premiere-pro-logo.png"
+  },
+  {
+    "title": "Adobe After Effects",
+    "maker": "Adobe Inc.",
+    "category": "Creator tools",
+    "heading": "Motion Design",
+    "rating": "4.9",
+    "downloads": "9.8M",
+    "color": "#9999ff",
+    "iconUrl": "https://github.com/akilan96/akilan96/blob/main/adobe_after_effects.jpg"
+  },
+  {
+    "title": "CorelDRAW Graphics Suite",
+    "maker": "Corel Corp",
+    "category": "Design",
+    "heading": "Vector Art",
+    "rating": "4.7",
+    "downloads": "6.2M",
+    "color": "#66bb6a",
+    "iconUrl": "https://github.com/akilan96/akilan96/blob/main/coreldraw.jpg"
+  },
+  {
+    "title": "FL Studio",
+    "maker": "Image-Line",
+    "category": "Music",
+    "heading": "Audio DAW",
+    "rating": "4.9",
+    "downloads": "14M",
+    "color": "#ff9800",
+    "iconUrl": "https://github.com/akilan96/akilan96/blob/main/FL_Studio.jpg"
+  },
+  {
+    "title": "Internet Download Manager (IDM)",
+    "maker": "Tonec Inc.",
+    "category": "Productivity",
+    "heading": "Speed Booster",
+    "rating": "4.8",
+    "downloads": "22M",
+    "color": "#42a5f5",
+    "iconUrl": "https://github.com/akilan96/akilan96/blob/main/internet_download_manager.png"
+  },
+  {
+    "title": "VMware Workstation Pro",
+    "maker": "VMware Inc.",
+    "category": "Creator tools",
+    "heading": "Virtual OS",
+    "rating": "4.8",
+    "downloads": "7.1M",
+    "color": "#607d8b",
+    "iconUrl": "https://github.com/akilan96/akilan96/blob/main/vm_ware.jpeg"
+  },
+  {
+    "title": "WinRAR",
+    "maker": "RARLAB",
+    "category": "Productivity",
+    "heading": "Compression",
+    "rating": "4.9",
+    "downloads": "45M",
+    "color": "#ab47bc",
+    "iconUrl": "https://github.com/akilan96/akilan96/blob/main/winrar-min.png"
+  },
+  {
+    "title": "Adobe Illustrator",
+    "maker": "Adobe Inc.",
+    "category": "Design",
+    "heading": "Vector Suite",
+    "rating": "4.9",
+    "downloads": "11M",
+    "color": "#ff9800",
+    "iconUrl": "https://github.com/akilan96/akilan96/blob/main/Adobe_illus.png"
+  },
+  {
+    "title": "Adobe Acrobat Pro",
+    "maker": "Adobe Inc.",
+    "category": "Productivity",
+    "heading": "PDF Editor",
+    "rating": "4.8",
+    "downloads": "18M",
+    "color": "#f44336",
+    "iconUrl": "https://github.com/akilan96/akilan96/blob/main/arcot_pro.png"
+  },
+  {
+    "title": "MATLAB",
+    "maker": "MathWorks",
+    "category": "Creator tools",
+    "heading": "Engineering",
+    "rating": "4.9",
+    "downloads": "5.4M",
+    "color": "#ff5722",
+    "iconUrl": "https://github.com/akilan96/akilan96/blob/main/Matlab_Logo.png"
+  },
+  {
+    "title": "CapCut",
+    "maker": "Bytedance",
+    "category": "Creator tools",
+    "heading": "Trending Editor",
+    "rating": "4.8",
+    "downloads": "19M",
+    "color": "#212121",
+    "iconUrl": "https://github.com/akilan96/akilan96/blob/main/capcut.jpg"
+  },
+  {
+    "title": "Spotify",
+    "maker": "Spotify AB",
+    "category": "Music",
+    "heading": "Music Streaming",
+    "rating": "4.8",
+    "downloads": "35M",
+    "color": "#1ed760",
+    "iconUrl": "https://github.com/akilan96/akilan96/blob/main/spotify.jpg"
+  },
+  {
+    "title": "Microsoft Visio",
+    "maker": "Microsoft",
+    "category": "Productivity",
+    "heading": "Diagramming",
+    "rating": "4.7",
+    "downloads": "4.8M",
+    "color": "#1976d2",
+    "iconUrl": "https://github.com/akilan96/akilan96/blob/main/Microsoft_Visio.png"
+  },
+  {
+    "title": "Wondershare Filmora",
+    "maker": "Wondershare",
+    "category": "Creator tools",
+    "heading": "Video Suite",
+    "rating": "4.7",
+    "downloads": "8.9M",
+    "color": "#00bfa5",
+    "iconUrl": "https://github.com/akilan96/akilan96/blob/main/flimora.jpeg"
+  },
+  {
+    "title": "SOLIDWORKS",
+    "maker": "Dassault Systèmes",
+    "category": "Creator tools",
+    "heading": "3D Design",
+    "rating": "4.9",
+    "downloads": "3.8M",
+    "color": "#d32f2f",
+    "iconUrl": "https://github.com/akilan96/akilan96/blob/main/solid_works.jpeg"
+  },
+  {
+    "title": "SketchUp Pro",
+    "maker": "Trimble Inc.",
+    "category": "Design",
+    "heading": "3D Modeling",
+    "rating": "4.8",
+    "downloads": "5.6M",
+    "color": "#0288d1",
+    "iconUrl": "https://github.com/akilan96/akilan96/blob/main/sketchup-pro.jpg"
+  },
+  {
+    "title": "PowerISO",
+    "maker": "PowerISO Computing",
+    "category": "Productivity",
+    "heading": "ISO Tools",
+    "rating": "4.7",
+    "downloads": "9.3M",
+    "color": "#ffb300",
+    "iconUrl": "https://github.com/akilan96/akilan96/blob/main/power_iso.jpeg"
+  }
+]
