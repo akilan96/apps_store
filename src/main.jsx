@@ -1150,7 +1150,7 @@ function App() {
                     type="text"
                     value={inputUserName} 
                     onChange={e => setInputUserName(e.target.value)} 
-                    placeholder="e.g. Akilan"
+                    placeholder="e.g. John"
                     required
                   />
                 </div>
@@ -1184,7 +1184,7 @@ function App() {
                   type="text"
                   value={inputUserName} 
                   onChange={e => setInputUserName(e.target.value)} 
-                  placeholder="Enter your name"
+                  placeholder="e.g. John"
                 />
               </div>
             </div>
